@@ -225,8 +225,8 @@ class HomeController extends Controller
                 });
             }])
             ->where(['deal_type'=>'flash_deal', 'status'=>1])
-            ->whereDate('start_date','<=',date('Y-m-d'))
-            ->whereDate('end_date','>=',date('Y-m-d'))
+            ->where('start_date','<=',date('Y-m-d H:i'))
+            ->where('end_date','>=',date('Y-m-d H:i'))
             ->first();
 
         //find what you need
@@ -348,8 +348,8 @@ class HomeController extends Controller
                 'seller.shop',
                 'flashDealProducts.featureDeal',
                 'flashDealProducts.flashDeal' => function($query){
-                    return $query->whereDate('start_date', '<=', date('Y-m-d'))
-                        ->whereDate('end_date', '>=', date('Y-m-d'));
+                    return $query->where('start_date', '<=', date('Y-m-d H:i'))
+                        ->where('end_date', '>=', date('Y-m-d H:i'));
                 },
                 'wishList'=>function($query){
                     return $query->where('customer_id', Auth::guard('customer')->user()->id ?? 0);
@@ -359,8 +359,8 @@ class HomeController extends Controller
                 }
             ])
             ->whereHas('flashDealProducts.featureDeal', function($query){
-                $query->whereDate('start_date', '<=', date('Y-m-d'))
-                    ->whereDate('end_date', '>=', date('Y-m-d'));
+                $query->where('start_date', '<=', date('Y-m-d H:i'))
+                    ->where('end_date', '>=', date('Y-m-d H:i'));
             })
             ->get();
 
@@ -765,16 +765,16 @@ class HomeController extends Controller
          */
         $featured_deals = $this->product->active()->with([
             'flashDealProducts.flashDeal' => function($query){
-            return $query->whereDate('start_date', '<=', date('Y-m-d'))
-                ->whereDate('end_date', '>=', date('Y-m-d'));
+            return $query->where('start_date', '<=', date('Y-m-d H:i'))
+                ->where('end_date', '>=', date('Y-m-d H:i'));
             }, 'wishList'=>function($query){
                 return $query->where('customer_id', Auth::guard('customer')->user()->id ?? 0);
             }, 'compareList'=>function($query){
                 return $query->where('user_id', Auth::guard('customer')->user()->id ?? 0);
             }
             ])->whereHas('flashDealProducts.featureDeal', function($query){
-                $query->whereDate('start_date', '<=', date('Y-m-d'))
-                    ->whereDate('end_date', '>=', date('Y-m-d'));
+                $query->where('start_date', '<=', date('Y-m-d H:i'))
+                    ->where('end_date', '>=', date('Y-m-d H:i'));
             })->latest()->take(4)->get();
 
 
@@ -889,16 +889,16 @@ class HomeController extends Controller
                 'seller.shop', 'category',
                 'flashDealProducts.featureDeal',
                 'flashDealProducts.flashDeal' => function($query){
-                return $query->whereDate('start_date', '<=', date('Y-m-d'))
-                    ->whereDate('end_date', '>=', date('Y-m-d'));
+                return $query->where('start_date', '<=', date('Y-m-d H:i'))
+                    ->where('end_date', '>=', date('Y-m-d H:i'));
                 }, 'wishList'=>function($query){
                     return $query->where('customer_id', Auth::guard('customer')->user()->id ?? 0);
                 }, 'compareList'=>function($query){
                     return $query->where('user_id', Auth::guard('customer')->user()->id ?? 0);
                 }
                 ])->whereHas('flashDealProducts.featureDeal', function($query){
-                    $query->whereDate('start_date', '<=', date('Y-m-d'))
-                        ->whereDate('end_date', '>=', date('Y-m-d'));
+                    $query->where('start_date', '<=', date('Y-m-d H:i'))
+                        ->where('end_date', '>=', date('Y-m-d H:i'));
                 })->get();
         //featured deal product end
 

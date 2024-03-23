@@ -55,12 +55,12 @@
                                     <div class="form-group">
                                         <label for="name"
                                                class="title-color font-weight-medium text-capitalize">{{ translate('start_date')}}</label>
-                                        <input type="date" name="start_date"  id="start-date-time" class="form-control" required>
+                                        <input type="datetime-local" name="start_date"  id="start-date-time" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="name"
                                                class="title-color font-weight-medium text-capitalize">{{ translate('end_date')}}</label>
-                                        <input type="date" name="end_date" id="end-date-time" class="form-control" required>
+                                        <input type="datetime-local" name="end_date" id="end-date-time" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

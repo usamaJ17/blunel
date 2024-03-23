@@ -85,8 +85,8 @@ class WebController extends Controller
                 $query->active();
             }])
             ->where(['id' => $id, 'status' => 1])
-            ->whereDate('start_date', '<=', date('Y-m-d'))
-            ->whereDate('end_date', '>=', date('Y-m-d'))
+            ->where('start_date', '<=', date('Y-m-d H:i'))
+            ->where('end_date', '>=', date('Y-m-d H:i'))
             ->first();
 
             $discountPrice = FlashDealProduct::with(['product'])->whereHas('product', function ($query) {

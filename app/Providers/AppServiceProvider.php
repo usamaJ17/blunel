@@ -96,8 +96,8 @@ class AppServiceProvider extends ServiceProvider
                             return $query->where('customer_id', Auth::guard('customer')->user() ? Auth::guard('customer')->user()->id : 0);
                         }]);
                     }])->where(['deal_type' => 'flash_deal', 'status' => 1])
-                        ->whereDate('start_date', '<=', date('Y-m-d'))
-                        ->whereDate('end_date', '>=', date('Y-m-d'))
+                        ->where('start_date', '<=', date('Y-m-d H:i'))
+                        ->where('end_date', '>=', date('Y-m-d H:i'))
                         ->first();
 
                     $featured_deals = Product::active()
@@ -105,13 +105,13 @@ class AppServiceProvider extends ServiceProvider
                             'seller.shop',
                             'flashDealProducts.featureDeal',
                             'flashDealProducts.featureDeal' => function ($query) {
-                                return $query->whereDate('start_date', '<=', date('Y-m-d'))
-                                    ->whereDate('end_date', '>=', date('Y-m-d'));
+                                return $query->whereDate('start_date', '<=', date('Y-m-d H:i'))
+                                    ->whereDate('end_date', '>=', date('Y-m-d H:i'));
                             }
                         ])
                         ->whereHas('flashDealProducts.featureDeal', function ($query) {
-                            $query->whereDate('start_date', '<=', date('Y-m-d'))
-                                ->whereDate('end_date', '>=', date('Y-m-d'));
+                            $query->whereDate('start_date', '<=', date('Y-m-d H:i'))
+                                ->whereDate('end_date', '>=', date('Y-m-d H:i'));
                         })
                         ->get();
 
@@ -217,7 +217,6 @@ class AppServiceProvider extends ServiceProvider
 
                 //currency
                 \App\Utils\Helpers::currency_load();
-
                 View::share(['web_config' => $web_config, 'language' => $language]);
 
                 Schema::defaultStringLength(191);

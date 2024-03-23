@@ -22,7 +22,7 @@
                         <div class="text-center text-white">
                             <div class="countdown-background">
                                 <span class="cz-countdown d-flex justify-content-center align-items-center flash-deal-countdown"
-                                    data-countdown="{{$web_config['flash_deals']?date('m/d/Y',strtotime($web_config['flash_deals']['end_date'])):''}} 23:59:00 ">
+                                    data-countdown="{{$web_config['flash_deals'] ? date('m/d/Y H:i:s', strtotime($web_config['flash_deals']['end_date'])) : ''}}">
                                     <span class="cz-countdown-days">
                                         <span class="cz-countdown-value"></span>
                                         <span class="cz-countdown-text">{{ translate('days')}}</span>

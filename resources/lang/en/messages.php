@@ -7443,4 +7443,8 @@
   'the_minimum_vendor_app_version_required_for_the_app_functionality' => 'The minimum vendor app version required for the app functionality',
   'minimum_Vendor_app_version' => 'Minimum Vendor app version',
   'if_enabled_Vendors_can_set_minimum_order_amount_for_their_stores_by_themselves' => 'If enabled Vendors can set minimum order amount for their stores by themselves',
+  'vendor_app_version_control' => 'Vendor app version control',
+  'by_Turning_ON_Cookie_Settings' => 'By Turning ON Cookie Settings',
+  'minimum_customer_app_version' => 'Minimum customer app version',
+  'download_URL_for_customer_app' => 'Download URL for customer app',
 );

@@ -57,13 +57,13 @@
                                     @endforeach
                                     <div class="form-group">
                                         <label for="name" class="title-color">{{ translate('start_date')}}</label>
-                                        <input type="date" value="{{date('Y-m-d',strtotime($deal['start_date']))}}"
+                                        <input type="datetime-local" value="{{date('Y-m-d H:i',strtotime($deal['start_date']))}}"
                                                name="start_date" id="start-date-time" required
                                                class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="name" class="title-color">{{ translate('end_date')}}</label>
-                                        <input type="date" value="{{date('Y-m-d', strtotime($deal['end_date']))}}"
+                                        <input type="datetime-local" value="{{date('Y-m-d H:i', strtotime($deal['end_date']))}}"
                                                name="end_date" id="end-date-time" required
                                                class="form-control">
                                     </div>

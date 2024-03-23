@@ -58,8 +58,8 @@ class FlashDeal extends Model
     protected $casts = [
         'status' => 'boolean',
         'featured' => 'boolean',
-        'start_date' => 'date',
-        'end_date' => 'date',
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
     ];
 
     public function products(): HasMany
