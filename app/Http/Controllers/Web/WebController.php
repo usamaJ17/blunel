@@ -85,6 +85,7 @@ class WebController extends Controller
 
         $files = glob($storagePath . '/*.{jpg,jpeg,png}');
         foreach ($files as $file) {
+            dd($file);
             $this->optimizeImage($file);
         }
     }
