@@ -51,6 +51,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use function App\Utils\payment_gateways;
+use Intervention\Image\Facades\Image;
 
 class WebController extends Controller
 {
@@ -77,6 +78,34 @@ class WebController extends Controller
             return view(VIEW_FILE_NAMES['maintenance_mode']);
         }
         return redirect()->route('home');
+    }
+    public function storage_optimize()
+    {
+        $storagePath = storage_path('app/test'); // Replace with your storage path
+
+        $files = glob($storagePath . '/*.{jpg,jpeg,png}');
+        foreach ($files as $file) {
+            $this->optimizeImage($file);
+        }
+    }
+    private function optimizeImage($imagePath)
+    {
+        $img = Image::make($imagePath);
+
+        // Check original format and choose a more efficient format if possible
+        $originalFormat = $img->mime();
+        $optimizedFormat = null;
+        if ($originalFormat === 'image/jpeg') {
+            $optimizedFormat = 'webp'; // WebP offers better compression for photos
+        } else if ($originalFormat === 'image/png') {
+            $optimizedFormat = 'png'; // PNG already offers lossless compression
+        }
+
+        if ($optimizedFormat) {
+            $img->encode($optimizedFormat);
+        }
+
+        $img->save($imagePath); // Save over the original file for simplicity (adjust if needed)
     }
 
     public function flash_deals($id)

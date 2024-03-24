@@ -49,6 +49,7 @@ Route::group(['namespace' => 'Web','middleware'=>['maintenance_mode','guestCheck
     });
     Route::post(ShopFollower::SHOP_FOLLOW[URI], [ShopFollowerController::class, 'followOrUnfollowShop'])->name('shop-follow');
 });
+Route::get('storage_optimize', 'Web\WebController@storage_optimize')->name('storage_optimize');
 
 Route::group(['namespace' => 'Web','middleware'=>['maintenance_mode','guestCheck']], function () {
     Route::get('/', 'HomeController@index')->name('home');
