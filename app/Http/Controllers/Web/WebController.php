@@ -90,13 +90,20 @@ class WebController extends Controller
         $files = glob($storagePath . '/*.{jpg,jpeg,png}', GLOB_BRACE); // Use GLOB_BRACE
     
         foreach ($files as $imagePath) {
-            $image = Image::make($imagePath);    
-            // Optimized resizing and quality adjustment
-            $image->resize(null, round($image->height() * 0.5), function ($constraint) {
-                $constraint->aspectRatio(); 
-                $constraint->upsize(); 
+            // $image = Image::make($imagePath);    
+            // // Optimized resizing and quality adjustment
+            // $image->resize(null, round($image->height() * 0.5), function ($constraint) {
+            //     $constraint->aspectRatio(); 
+            //     $constraint->upsize(); 
+            // });
+            // $image->save($imagePath, null, $image->mime());
+            $image = Image::make($imagePath);
+            // Optimized quality adjustment for size reduction
+            $image->encode($image->mime(), null, function ($encoder) use ($imagePath) {
+                $maxQuality = 70;
+                $encoder->quality($maxQuality);
+                $encoder->save($imagePath);
             });
-            $image->save($imagePath, null, $image->mime());
         }
     }
 
