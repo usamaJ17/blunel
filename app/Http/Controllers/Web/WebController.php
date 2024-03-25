@@ -52,9 +52,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use function App\Utils\payment_gateways;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\ImageManager;
-// use Intervention\Image\Drivers\Gd\Driver;
-// use Spatie\ImageOptimizer\OptimizerChainFactory;
+use Intervention\Image\Image;
 
 
 class WebController extends Controller
@@ -85,17 +83,21 @@ class WebController extends Controller
     }
     public function storage_optimize()
     {
+        
         $storagePath = storage_path('app/test');
         $storagePath = str_replace('\\', '/', $storagePath); // Convert backslashes to forward slashes
-        
-        $files = glob($storagePath . '/*.{jpg,jpeg,png}', GLOB_BRACE); // Use GLOB_BRACE to enable brace expansion
+    
+        $files = glob($storagePath . '/*.{jpg,jpeg,png}', GLOB_BRACE); // Use GLOB_BRACE
+    
         foreach ($files as $imagePath) {
-            // $manager = new ImageManager(new Driver());
-            //read Image
-            // $image = Image::read($imagePath);
-            // $image = $image->scale(width:$image->width() * 0.7,height:$image->height() * 0.7);
-            // $image->toPng()->save($imagePath);
-            // ImageOptimizer::optimize($imagePath);
+            $image = Image::make($imagePath); // Create Image instance in v2
+    
+            // Optimized resizing and quality adjustment
+            $image->resize(null, round($image->height() * 0.7), function ($constraint) {
+                $constraint->aspectRatio(); 
+                $constraint->upsize(); 
+            });
+            $image->save($imagePath, null, $image->mime());
         }
     }
 
