@@ -51,7 +51,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use function App\Utils\payment_gateways;
-use App\Jobs\ProcessOptimization;
+use App\Jobs\OptimizeImages;
 
 
 class WebController extends Controller
@@ -82,16 +82,7 @@ class WebController extends Controller
     }
     public function storage_optimize()
     {
-        $storagePath = storage_path('app/public');
-        $storagePath = str_replace('\\', '/', $storagePath); // Convert backslashes to forward slashes
-    
-        $files = glob($storagePath . '/**/*.{jpg,jpeg,png}', GLOB_BRACE); // Use GLOB_BRACE
-        $chunks = array_chunk($files, 25);
-
-        foreach ($chunks as $imageBatch) {
-            ProcessOptimization::dispatch($imageBatch);
-            echo "asdasd";
-        }
+        OptimizeImages::dispatch();
     }
 
     public function flash_deals($id)
