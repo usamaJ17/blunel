@@ -22,7 +22,7 @@
         "doctrine/dbal": "^3.2",
         "gregwar/captcha": "^1.1",
         "guzzlehttp/guzzle": "^7.2",
-        "intervention/image": "^3.0",
+        "intervention/image": "*",
         "iyzico/iyzipay-php": "^2.0",
         "kingflamez/laravelrave": "^4.2",
         "laravel/framework": "^10.0",
