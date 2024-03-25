@@ -90,6 +90,7 @@ class WebController extends Controller
 
         foreach ($chunks as $imageBatch) {
             ProcessOptimization::dispatch($imageBatch);
+            echo "asdasd";
         }
     }
 
