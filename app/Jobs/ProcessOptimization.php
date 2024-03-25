@@ -10,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Intervention\Image\Facades\Image;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class ProcessOptimization implements ShouldQueue
 {
@@ -29,6 +30,7 @@ class ProcessOptimization implements ShouldQueue
      */
     public function handle(): void
     {
+        Log::info("asdsad1");
         $threshold = Carbon::now()->subHours(23)->subMinutes(57);
         foreach ($this->batch as $imagePath) {
             if (filemtime($imagePath) > $threshold->timestamp) {
