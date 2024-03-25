@@ -89,7 +89,7 @@ class WebController extends Controller
         $chunks = array_chunk($files, 25);
 
         foreach ($chunks as $imageBatch) {
-            ProcessOptimization::dispatch($imageBatch);
+            ProcessOptimization::dispatchNow($imageBatch);
             echo "asdasd";
         }
     }
