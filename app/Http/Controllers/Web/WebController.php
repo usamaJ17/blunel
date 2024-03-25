@@ -52,7 +52,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use function App\Utils\payment_gateways;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Image;
+use Intervention\Image\Facades\Image;
 
 
 class WebController extends Controller
@@ -90,8 +90,7 @@ class WebController extends Controller
         $files = glob($storagePath . '/*.{jpg,jpeg,png}', GLOB_BRACE); // Use GLOB_BRACE
     
         foreach ($files as $imagePath) {
-            $image = Image::make($imagePath); // Create Image instance in v2
-    
+            $image = Image::make($imagePath);    
             // Optimized resizing and quality adjustment
             $image->resize(null, round($image->height() * 0.7), function ($constraint) {
                 $constraint->aspectRatio(); 
