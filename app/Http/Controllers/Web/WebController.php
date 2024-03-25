@@ -92,7 +92,7 @@ class WebController extends Controller
         foreach ($files as $imagePath) {
             $image = Image::make($imagePath);    
             // Optimized resizing and quality adjustment
-            $image->resize(null, round($image->height() * 0.7), function ($constraint) {
+            $image->resize(null, round($image->height() * 0.5), function ($constraint) {
                 $constraint->aspectRatio(); 
                 $constraint->upsize(); 
             });
