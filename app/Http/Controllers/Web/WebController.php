@@ -52,6 +52,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use function App\Utils\payment_gateways;
 use App\Jobs\OptimizeImages;
+use Intervention\Image\Facades\Image;
 
 
 class WebController extends Controller
@@ -82,6 +83,8 @@ class WebController extends Controller
     }
     public function storage_optimize()
     {
+        $image = Image::make('/home/u529185484/domains/blunel.com.bd/public_html/storage/app/public/banner/2023-06-18-648eb6569490b.png');
+        dd($image);
         // OptimizeImages::dispatch();
         $storagePath = storage_path('app/public');
         $storagePath = str_replace('\\', '/', $storagePath); // Convert backslashes to forward slashes
