@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class OptimizeImages implements ShouldQueue
 {
@@ -33,6 +34,7 @@ class OptimizeImages implements ShouldQueue
         $chunks = array_chunk($files, 100);
 
         foreach ($chunks as $imageBatch) {
+            Log::info("here");
             ProcessOptimization::dispatch($imageBatch);
         }
     }
