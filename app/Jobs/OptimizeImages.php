@@ -35,7 +35,6 @@ class OptimizeImages implements ShouldQueue
         $chunks = array_chunk($files, 25);
 
         foreach ($chunks as $imageBatch) {
-            Log::info("IN HERE-1");
             ProcessOptimization::dispatch($imageBatch);
         }
     }
