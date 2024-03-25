@@ -29,8 +29,8 @@ class ProcessOptimization implements ShouldQueue
      */
     public function handle(): void
     {
+        $threshold = Carbon::now()->subHours(23)->subMinutes(57);
         foreach ($this->batch as $imagePath) {
-            $threshold = Carbon::now()->subHours(23)->subMinutes(57);
             if (filemtime($imagePath) > $threshold->timestamp) {
                 $image = Image::make($imagePath);
                 $image->resize($image->width() * 0.70, $image->height() * 0.70);
