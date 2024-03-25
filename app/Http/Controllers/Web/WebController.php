@@ -51,7 +51,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use function App\Utils\payment_gateways;
-use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class WebController extends Controller
 {
@@ -81,12 +83,16 @@ class WebController extends Controller
     }
     public function storage_optimize()
     {
-        $storagePath = storage_path('app/test'); // Replace with your storage path
-
-        $files = glob($storagePath . '/*.{jpg,jpeg,png}');
-        foreach ($files as $file) {
-            dd($file);
-            $this->optimizeImage($file);
+        $storagePath = storage_path('app/test');
+        $storagePath = str_replace('\\', '/', $storagePath); // Convert backslashes to forward slashes
+        
+        $files = glob($storagePath . '/*.{jpg,jpeg,png}', GLOB_BRACE); // Use GLOB_BRACE to enable brace expansion
+        foreach ($files as $imagePath) {
+            $manager = new ImageManager(new Driver());
+            //read Image
+            $image = $manager->read($imagePath);
+            $image = $image->scale(width:$image->width() * 0.7,height:$image->height() * 0.7);
+            $image->toPng()->save($imagePath);
         }
     }
     private function optimizeImage($imagePath)
