@@ -82,7 +82,13 @@ class WebController extends Controller
     }
     public function storage_optimize()
     {
-        OptimizeImages::dispatch();
+        // OptimizeImages::dispatch();
+        $storagePath = storage_path('app/public');
+        $storagePath = str_replace('\\', '/', $storagePath); // Convert backslashes to forward slashes
+    
+        $files = glob($storagePath . '/*.{jpg,jpeg,png}', GLOB_BRACE); // Use GLOB_BRACE
+        $chunks = array_chunk($files, 100);
+        dd($chunks);
     }
 
     public function flash_deals($id)
