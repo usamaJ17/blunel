@@ -86,7 +86,7 @@ class WebController extends Controller
         $storagePath = storage_path('app/public');
         $storagePath = str_replace('\\', '/', $storagePath); // Convert backslashes to forward slashes
     
-        $files = glob($storagePath . '/*.{jpg,jpeg,png}', GLOB_BRACE); // Use GLOB_BRACE
+        $files = glob($storagePath . '/**/*.{jpg,jpeg,png}', GLOB_BRACE); // Use GLOB_BRACE
         $chunks = array_chunk($files, 100);
         dd($chunks);
     }
