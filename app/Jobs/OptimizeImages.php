@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use App\Jobs\ProcessOptimization;
 
 class OptimizeImages implements ShouldQueue
 {
@@ -27,7 +28,6 @@ class OptimizeImages implements ShouldQueue
      */
     public function handle(): void
     {
-        Log::info("asdasd");
         $storagePath = storage_path('app/public');
         $storagePath = str_replace('\\', '/', $storagePath); // Convert backslashes to forward slashes
     
@@ -36,6 +36,7 @@ class OptimizeImages implements ShouldQueue
 
         foreach ($chunks as $imageBatch) {
             ProcessOptimization::dispatch($imageBatch);
+            echo "asdasd";
         }
     }
 }
