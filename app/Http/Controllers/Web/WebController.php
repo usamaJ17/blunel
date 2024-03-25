@@ -52,8 +52,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use function App\Utils\payment_gateways;
 use ImageOptimizer;
-// use Illuminate\Support\Facades\Storage;
-// use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
 // use Intervention\Image\Drivers\Gd\Driver;
 // use Spatie\ImageOptimizer\OptimizerChainFactory;
 
@@ -92,11 +92,11 @@ class WebController extends Controller
         $files = glob($storagePath . '/*.{jpg,jpeg,png}', GLOB_BRACE); // Use GLOB_BRACE to enable brace expansion
         foreach ($files as $imagePath) {
             // $manager = new ImageManager(new Driver());
-            // //read Image
-            // $image = $manager->read($imagePath);
-            // $image = $image->scale(width:$image->width() * 0.7,height:$image->height() * 0.7);
-            // $image->toPng()->save($imagePath);
-            ImageOptimizer::optimize($imagePath);
+            //read Image
+            $image = Image::read($imagePath);
+            $image = $image->scale(width:$image->width() * 0.7,height:$image->height() * 0.7);
+            $image->toPng()->save($imagePath);
+            // ImageOptimizer::optimize($imagePath);
         }
     }
 
