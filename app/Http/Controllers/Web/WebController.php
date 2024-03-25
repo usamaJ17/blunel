@@ -82,6 +82,7 @@ class WebController extends Controller
     public function storage_optimize()
     {
         OptimizeImages::dispatch();
+        dd("asd");
     }
 
     public function flash_deals($id)
