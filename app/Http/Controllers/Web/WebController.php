@@ -100,8 +100,8 @@ class WebController extends Controller
             $image = Image::make($imagePath);
             // Optimized quality adjustment for size reduction
             // $image->encode($image->mime(), 65);
-            $image->resize($image->width() * 0.75, $image->height() * 0.75);
-            $image->save($imagePath, 50,$image->mime());
+            $image->resize($image->width() * 0.65, $image->height() * 0.65);
+            $image->save($imagePath, 40,$image->mime());
         }
     }
 
