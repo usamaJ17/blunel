@@ -31,18 +31,18 @@ class ProcessOptimization implements ShouldQueue
      */
     public function handle(): void
     {
-        try{
-            $threshold = Carbon::now()->subHours(23)->subMinutes(57);
-            foreach ($this->batch as $imagePath) {
-                if (!(filemtime($imagePath) > $threshold->timestamp)) {
+        $threshold = Carbon::now()->subHours(23)->subMinutes(57);
+        foreach ($this->batch as $imagePath) {
+            if (!(filemtime($imagePath) > $threshold->timestamp)) {
+                try{
                     $image = Image::make($imagePath);
                     $image->resize($image->width() * 0.70, $image->height() * 0.70);
                     $image->save($imagePath, 45,$image->mime());
-                    Log::info('-');
+                }
+                catch(Exception $ex){
+                    Log::info($ex->getMessage());
                 }
             }
-        }catch(Exception $ex){
-            Log::info($ex->getMessage());
         }
     }
 }
