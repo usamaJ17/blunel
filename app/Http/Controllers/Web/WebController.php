@@ -51,9 +51,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use function App\Utils\payment_gateways;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
+use ImageOptimizer;
+// use Illuminate\Support\Facades\Storage;
+// use Intervention\Image\ImageManager;
+// use Intervention\Image\Drivers\Gd\Driver;
+// use Spatie\ImageOptimizer\OptimizerChainFactory;
+
 
 class WebController extends Controller
 {
@@ -88,31 +91,13 @@ class WebController extends Controller
         
         $files = glob($storagePath . '/*.{jpg,jpeg,png}', GLOB_BRACE); // Use GLOB_BRACE to enable brace expansion
         foreach ($files as $imagePath) {
-            $manager = new ImageManager(new Driver());
-            //read Image
-            $image = $manager->read($imagePath);
-            $image = $image->scale(width:$image->width() * 0.7,height:$image->height() * 0.7);
-            $image->toPng()->save($imagePath);
+            // $manager = new ImageManager(new Driver());
+            // //read Image
+            // $image = $manager->read($imagePath);
+            // $image = $image->scale(width:$image->width() * 0.7,height:$image->height() * 0.7);
+            // $image->toPng()->save($imagePath);
+            ImageOptimizer::optimize($imagePath);
         }
-    }
-    private function optimizeImage($imagePath)
-    {
-        $img = Image::make($imagePath);
-
-        // Check original format and choose a more efficient format if possible
-        $originalFormat = $img->mime();
-        $optimizedFormat = null;
-        if ($originalFormat === 'image/jpeg') {
-            $optimizedFormat = 'webp'; // WebP offers better compression for photos
-        } else if ($originalFormat === 'image/png') {
-            $optimizedFormat = 'png'; // PNG already offers lossless compression
-        }
-
-        if ($optimizedFormat) {
-            $img->encode($optimizedFormat);
-        }
-
-        $img->save($imagePath); // Save over the original file for simplicity (adjust if needed)
     }
 
     public function flash_deals($id)
