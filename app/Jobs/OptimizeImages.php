@@ -27,6 +27,7 @@ class OptimizeImages implements ShouldQueue
      */
     public function handle(): void
     {
+        Log::info("asdasd");
         $storagePath = storage_path('app/public');
         $storagePath = str_replace('\\', '/', $storagePath); // Convert backslashes to forward slashes
     
