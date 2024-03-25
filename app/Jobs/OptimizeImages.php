@@ -26,6 +26,14 @@ class OptimizeImages implements ShouldQueue
      */
     public function handle(): void
     {
-        //
+        $storagePath = storage_path('app/public');
+        $storagePath = str_replace('\\', '/', $storagePath); // Convert backslashes to forward slashes
+    
+        $files = glob($storagePath . '/*.{jpg,jpeg,png}', GLOB_BRACE); // Use GLOB_BRACE
+        $chunks = array_chunk($files, 100);
+
+        foreach ($chunks as $imageBatch) {
+            ProcessOptimization::dispatch($imageBatch);
+        }
     }
 }

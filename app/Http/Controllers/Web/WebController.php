@@ -51,8 +51,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use function App\Utils\payment_gateways;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
+use App\Jobs\OptimizeImages;
 
 
 class WebController extends Controller
@@ -83,29 +82,7 @@ class WebController extends Controller
     }
     public function storage_optimize()
     {
-        
-        $storagePath = storage_path('app/test');
-        $storagePath = str_replace('\\', '/', $storagePath); // Convert backslashes to forward slashes
-    
-        $files = glob($storagePath . '/*.{jpg,jpeg,png}', GLOB_BRACE); // Use GLOB_BRACE
-    
-        foreach ($files as $imagePath) {
-            // $image = Image::make($imagePath);    
-            // // Optimized resizing and quality adjustment
-            // $image->resize(null, round($image->height() * 0.5), function ($constraint) {
-            //     $constraint->aspectRatio(); 
-            //     $constraint->upsize(); 
-            // });
-            // $image->save($imagePath, null, $image->mime());
-            $threshold = Carbon::now()->subMinutes(5);
-            if (filemtime($imagePath) > $threshold->timestamp) {
-                $image = Image::make($imagePath);
-                // Optimized quality adjustment for size reduction
-                // $image->encode($image->mime(), 65);
-                $image->resize($image->width() * 0.65, $image->height() * 0.65);
-                $image->save($imagePath, 40,$image->mime());
-            }
-        }
+        OptimizeImages::dispatch();
     }
 
     public function flash_deals($id)
